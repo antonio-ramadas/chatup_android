@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:id="@+id/main_group" android:checkableBehavior="single">
+    <group android:id="@+id/ViewRooms" android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_logout"
-            android:icon="@android:drawable/ic_lock_power_off"
-            android:title="Log Out"
+            android:id="@+id/nav_view_rooms"
+            android:icon="@android:drawable/sym_action_chat"
+            android:title="Rooms"
             />
     </group>
 
@@ -21,5 +21,13 @@
                 android:title="Private Room Example" />
         </menu>
     </item>
+
+    <group android:id="@+id/log_group" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@android:drawable/ic_lock_power_off"
+            android:title="Log Out"
+            />
+    </group>
 
 </menu>

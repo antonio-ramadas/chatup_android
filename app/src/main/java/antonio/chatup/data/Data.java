@@ -23,6 +23,11 @@ public class Data {
     private Data() {
     }
 
+    public void clear() {
+        user = null;
+        rooms = new ArrayList<Room>();
+    }
+
     public void addRoom(Room room) {
         rooms.add(room);
     }
