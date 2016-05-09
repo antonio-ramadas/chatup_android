@@ -1,13 +1,11 @@
-package antonio.chatup;
+package antonio.chatup.screens;
 
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,11 +16,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import antonio.chatup.R;
 import antonio.chatup.dummy.DummyContent;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, RoomFragment.OnListFragmentInteractionListener,
-                    DialogCreateRoomFragment.OnFragmentInteractionListener , DialogAccessRoomFragment.OnFragmentInteractionListener{
+                    DialogCreateRoomFragment.OnFragmentInteractionListener,
+                    DialogAccessRoomFragment.OnFragmentInteractionListener,
+                    ChatFragment.OnListFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

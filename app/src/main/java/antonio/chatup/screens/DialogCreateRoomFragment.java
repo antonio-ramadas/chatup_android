@@ -1,4 +1,4 @@
-package antonio.chatup;
+package antonio.chatup.screens;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -11,6 +11,8 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import antonio.chatup.R;
 
 
 /**

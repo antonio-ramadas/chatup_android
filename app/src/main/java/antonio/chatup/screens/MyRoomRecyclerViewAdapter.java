@@ -1,10 +1,7 @@
-package antonio.chatup;
+package antonio.chatup.screens;
 
-import android.app.Activity;
-import android.content.res.Resources;
 import android.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,24 +9,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 //import antonio.chatup.ItemFragment.OnListFragmentInteractionListener;
-import antonio.chatup.RoomFragment.OnListFragmentInteractionListener;
-import antonio.chatup.dummy.DummyContent;
+import antonio.chatup.R;
 import antonio.chatup.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
+ * specified {@link RoomFragment.OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyRoomRecyclerViewAdapter extends RecyclerView.Adapter<MyRoomRecyclerViewAdapter.ViewHolder> {
 
     private final List<DummyItem> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private final RoomFragment.OnListFragmentInteractionListener mListener;
     public FragmentManager fragmentManager;
 
-    public MyRoomRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener, FragmentManager fragmentManager) {
+    public MyRoomRecyclerViewAdapter(List<DummyItem> items, RoomFragment.OnListFragmentInteractionListener listener, FragmentManager fragmentManager) {
         mValues = items;
         mListener = listener;
         this.fragmentManager = fragmentManager;
