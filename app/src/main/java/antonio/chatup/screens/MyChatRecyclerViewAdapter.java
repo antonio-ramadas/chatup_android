@@ -1,6 +1,7 @@
 package antonio.chatup.screens;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +9,6 @@ import android.widget.TextView;
 
 import antonio.chatup.screens.ChatFragment.OnListFragmentInteractionListener;
 import antonio.chatup.R;
-import antonio.chatup.dummy.DummyContent;
 import antonio.chatup.dummy.DummyContent.DummyItem;
 
 import java.util.List;
@@ -28,8 +28,6 @@ public class MyChatRecyclerViewAdapter extends RecyclerView.Adapter<MyChatRecycl
         mListener = listener;
     }
 
-
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -40,8 +38,13 @@ public class MyChatRecyclerViewAdapter extends RecyclerView.Adapter<MyChatRecycl
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        //TODO clean this up (just to fill with information for debug)
+        holder.mUserView.setText(mValues.get(position).id+"@gmail.com@09-05-2016 17:59");
+        String text = ""; int random = (int) (Math.random() * 20);
+        for (int i = 0; i < random; i++) {
+            text += " test";
+        }
+        holder.mMessageView.setText(mValues.get(position).content + text);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,20 +65,20 @@ public class MyChatRecyclerViewAdapter extends RecyclerView.Adapter<MyChatRecycl
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
+        public final TextView mUserView;
+        public final TextView mMessageView;
         public DummyItem mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mUserView = (TextView) view.findViewById(R.id.userInfo);
+            mMessageView = (TextView) view.findViewById(R.id.chatMessage);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mMessageView.getText() + "'";
         }
     }
 }

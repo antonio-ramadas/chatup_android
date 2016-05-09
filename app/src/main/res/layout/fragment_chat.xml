@@ -7,23 +7,32 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingBottom="10dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="user@date"
-            android:id="@+id/userInfo" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/message_receive">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Chat Message"
-            android:id="@+id/chatMessage"
-            android:inputType="textMultiLine"
-            android:textColor="@color/abc_background_cache_hint_selector_material_dark" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="user@date"
+                android:id="@+id/userInfo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Chat Message"
+                android:id="@+id/chatMessage"
+                android:inputType="textMultiLine"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>
