@@ -2,15 +2,24 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
-    <ImageView
-        android:src="@drawable/ic_menu_camera"
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:scaleType="center"
-        android:background="#FFFFBB33"
-        android:contentDescription="@string/app_name" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/create_room_title"
+        android:id="@+id/title"
+        android:background="#ffbb32"
+        android:textColor="@android:color/white"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:singleLine="true"
+        android:autoText="false"
+        android:elegantTextHeight="false"
+        android:gravity="center_vertical|fill" />
+
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/room_name"
         android:inputType="textEmailAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,9 +27,9 @@
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
-        android:hint="username" />
+        android:hint="@string/room_name" />
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/room_password"
         android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,5 +38,5 @@
         android:layout_marginRight="4dp"
         android:layout_marginBottom="16dp"
         android:fontFamily="sans-serif"
-        android:hint="password"/>
+        android:hint="@string/room_password"/>
 </LinearLayout>

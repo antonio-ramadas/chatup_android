@@ -70,7 +70,7 @@ public class RoomFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyRoomRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MyRoomRecyclerViewAdapter(DummyContent.ITEMS, mListener, getFragmentManager()));
         }
         return view;
     }

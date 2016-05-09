@@ -20,6 +20,12 @@
 
     <string name="action_settings">Settings</string>
 
+    <string name="access_room_title">Access Room</string>
+
+    <string name="create_room_title">Create Room</string>
+    <string name="room_name">Name</string>
+    <string name="room_password">Password (Optional)</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
