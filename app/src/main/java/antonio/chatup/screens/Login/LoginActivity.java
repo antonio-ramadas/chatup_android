@@ -1,4 +1,4 @@
-package antonio.chatup.screens;
+package antonio.chatup.screens.Login;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import antonio.chatup.R;
+import antonio.chatup.screens.ViewRooms.MainActivity;
 
 import static android.Manifest.permission.READ_CONTACTS;
 

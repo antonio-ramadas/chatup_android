@@ -1,4 +1,4 @@
-package antonio.chatup.screens;
+package antonio.chatup.screens.Room;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import antonio.chatup.R;
+import antonio.chatup.data.Message;
+import antonio.chatup.data.Room;
 import antonio.chatup.dummy.DummyContent;
 import antonio.chatup.dummy.DummyContent.DummyItem;
 
@@ -22,10 +24,8 @@ import antonio.chatup.dummy.DummyContent.DummyItem;
  */
 public class ChatFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
+    private static final String ROOM_DATA = "room-data";
+    private Room mRoom;
     private OnListFragmentInteractionListener mListener;
 
     /**
@@ -35,12 +35,10 @@ public class ChatFragment extends Fragment {
     public ChatFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static ChatFragment newInstance(int columnCount) {
+    public static ChatFragment newInstance(Room room) {
         ChatFragment fragment = new ChatFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
+        args.putSerializable(ROOM_DATA, room);
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,7 +48,7 @@ public class ChatFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            mRoom = (Room) getArguments().getSerializable(ROOM_DATA);
         }
     }
 
@@ -63,12 +61,13 @@ public class ChatFragment extends Fragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            /*if (mRoom == null) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new MyChatRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+                recyclerView.setLayoutManager(new GridLayoutManager(context, 1));
+            }*/
+            recyclerView.setAdapter(new MyChatRecyclerViewAdapter(mRoom, mListener));
         }
         return view;
     }
@@ -102,6 +101,6 @@ public class ChatFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Message message);
     }
 }

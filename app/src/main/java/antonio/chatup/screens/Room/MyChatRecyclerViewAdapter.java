@@ -1,30 +1,34 @@
-package antonio.chatup.screens;
+package antonio.chatup.screens.Room;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import antonio.chatup.screens.ChatFragment.OnListFragmentInteractionListener;
 import antonio.chatup.R;
+import antonio.chatup.data.Message;
+import antonio.chatup.data.Room;
 import antonio.chatup.dummy.DummyContent.DummyItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
+ * specified {@link ChatFragment.OnListFragmentInteractionListener}.
  */
 public class MyChatRecyclerViewAdapter extends RecyclerView.Adapter<MyChatRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private final ArrayList<Message> messages;
+    private final ChatFragment.OnListFragmentInteractionListener mListener;
 
-    public MyChatRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
+    public MyChatRecyclerViewAdapter(Room room, ChatFragment.OnListFragmentInteractionListener listener) {
+        if (room == null) {
+            this.messages = new ArrayList<Message>();
+        } else {
+            this.messages = room.getMessages();
+        }
         mListener = listener;
     }
 
@@ -37,14 +41,9 @@ public class MyChatRecyclerViewAdapter extends RecyclerView.Adapter<MyChatRecycl
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        //TODO clean this up (just to fill with information for debug)
-        holder.mUserView.setText(mValues.get(position).id+"@gmail.com@09-05-2016 17:59");
-        String text = ""; int random = (int) (Math.random() * 20);
-        for (int i = 0; i < random; i++) {
-            text += " test";
-        }
-        holder.mMessageView.setText(mValues.get(position).content + text);
+        holder.mItem = messages.get(position);
+        holder.mUserView.setText(messages.get(position).getSender() + "@" + messages.get(position).getDate());
+        holder.mTextView.setText(messages.get(position).getMsg());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,25 +59,25 @@ public class MyChatRecyclerViewAdapter extends RecyclerView.Adapter<MyChatRecycl
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return messages.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mUserView;
-        public final TextView mMessageView;
-        public DummyItem mItem;
+        public final TextView mTextView;
+        public Message mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
             mUserView = (TextView) view.findViewById(R.id.userInfo);
-            mMessageView = (TextView) view.findViewById(R.id.chatMessage);
+            mTextView = (TextView) view.findViewById(R.id.chatMessage);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mMessageView.getText() + "'";
+            return super.toString() + " '" + mUserView.getText() + "'";
         }
     }
 }

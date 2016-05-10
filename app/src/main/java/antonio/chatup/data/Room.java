@@ -1,26 +1,24 @@
 package antonio.chatup.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.PriorityQueue;
 
 /**
  * Created by Antonio on 07-05-2016.
  */
-public class Room {
+public class Room implements Serializable {
 
     public static final boolean PUBLIC_ROOM = false;
     public static final boolean PRIVATE_ROOM = true;
 
-    ArrayList<Message> messages = new ArrayList<Message>();
+    private ArrayList<Message> messages = new ArrayList<Message>();
 
     private boolean privateRoom;
 
     private String name;
 
-    Room(String name, boolean type) {
+    public Room(String name, boolean type) {
         this.name = name;
         privateRoom = type;
     }
@@ -40,7 +38,7 @@ public class Room {
      * @param msg Message to be added
      */
     public void addMsg(Message msg) {
-        int index = Collections.binarySearch(messages, msg);
+        int index = Collections.binarySearch(getMessages(), msg);
 
         //TODO probably if the index is positive, then the message already exists...
         if (index < 0) {
@@ -49,6 +47,10 @@ public class Room {
             index = -index - 1;
         }
 
-        messages.add(index, msg);
+        getMessages().add(index, msg);
+    }
+
+    public ArrayList<Message> getMessages() {
+        return messages;
     }
 }

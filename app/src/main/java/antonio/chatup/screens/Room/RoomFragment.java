@@ -1,4 +1,4 @@
-package antonio.chatup.screens;
+package antonio.chatup.screens.Room;
 
 import android.content.Context;
 import android.os.Bundle;

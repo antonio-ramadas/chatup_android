@@ -1,5 +1,6 @@
 package antonio.chatup.data;
 
+import java.io.Serializable;
 import java.security.Timestamp;
 import java.util.Comparator;
 import java.util.Date;
@@ -7,7 +8,7 @@ import java.util.Date;
 /**
  * Created by Antonio on 07-05-2016.
  */
-public class Message implements Comparable<Message> {
+public class Message implements Comparable<Message>, Serializable {
 
     /**
      * Date of the message
@@ -24,8 +25,8 @@ public class Message implements Comparable<Message> {
      */
     private String sender;
 
-    Message(Timestamp timestamp, String msg, String email) {
-        date = timestamp.getTimestamp();
+    public Message(long timestamp, String msg, String email) {
+        date = new Date(timestamp);
         this.msg = msg;
         this.sender = email;
     }

@@ -1,4 +1,4 @@
-package antonio.chatup.screens;
+package antonio.chatup.screens.ViewRooms;
 
 import android.app.Dialog;
 import android.content.Context;

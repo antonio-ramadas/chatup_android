@@ -1,4 +1,4 @@
-package antonio.chatup.screens;
+package antonio.chatup.screens.ViewRooms;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -17,13 +17,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import antonio.chatup.R;
+import antonio.chatup.data.Message;
 import antonio.chatup.dummy.DummyContent;
+import antonio.chatup.screens.Login.LoginActivity;
+import antonio.chatup.screens.Room.ChatRoom;
+import antonio.chatup.screens.Room.RoomFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, RoomFragment.OnListFragmentInteractionListener,
-                    DialogCreateRoomFragment.OnFragmentInteractionListener,
-                    DialogAccessRoomFragment.OnFragmentInteractionListener,
-                    ChatFragment.OnListFragmentInteractionListener {
+        DialogCreateRoomFragment.OnFragmentInteractionListener,
+        DialogAccessRoomFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +59,8 @@ public class MainActivity extends AppCompatActivity
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
             RoomFragment rf = new RoomFragment();
-            ChatFragment cf = new ChatFragment();
 
-            fragmentTransaction.add(R.id.fragment, cf);
+            fragmentTransaction.add(R.id.fragment, rf);
 
             fragmentTransaction.commit();
         }
@@ -110,6 +112,11 @@ public class MainActivity extends AppCompatActivity
             Intent i = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(i);
             finish();
+        } else if (id != R.id.nav_view_rooms) {
+            Intent i = new Intent(getApplicationContext(), ChatRoom.class);
+            //pass as argument the room title
+            i.putExtra(String.valueOf(R.string.room_title_param), item.getTitle());
+            startActivity(i);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -121,7 +128,6 @@ public class MainActivity extends AppCompatActivity
     public void onListFragmentInteraction(DummyContent.DummyItem item) {
 
     }
-
     @Override
     public void onFragmentInteraction(Uri uri) {
 

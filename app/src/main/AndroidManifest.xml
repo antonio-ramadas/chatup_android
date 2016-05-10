@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".screens.LoginActivity"
+            android:name=".screens.Login.LoginActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,9 +23,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".screens.MainActivity"
+            android:name=".screens.ViewRooms.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".screens.Room.ChatRoom"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

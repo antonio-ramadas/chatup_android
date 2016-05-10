@@ -1,4 +1,4 @@
-package antonio.chatup.screens;
+package antonio.chatup.screens.Room;
 
 import android.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 //import antonio.chatup.ItemFragment.OnListFragmentInteractionListener;
 import antonio.chatup.R;
 import antonio.chatup.dummy.DummyContent.DummyItem;
+import antonio.chatup.screens.ViewRooms.DialogAccessRoomFragment;
 
 import java.util.List;
 
