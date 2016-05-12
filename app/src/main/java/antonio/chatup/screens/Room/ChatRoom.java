@@ -20,6 +20,8 @@ import antonio.chatup.data.Room;
 
 public class ChatRoom extends AppCompatActivity implements ChatFragment.OnListFragmentInteractionListener {
 
+    ChatFragment chat;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,19 +39,21 @@ public class ChatRoom extends AppCompatActivity implements ChatFragment.OnListFr
             }
         });
 
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        if (savedInstanceState == null) {
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        Room room = new Room("Teste", Room.PRIVATE_ROOM);
-        //Timestamp timestamp, String msg, String email
-        Message message = new Message(System.currentTimeMillis(), "Message", "test@gmail.com");
-        room.addMsg(message);
-        ChatFragment rf = ChatFragment.newInstance(room);
+            Room room = new Room("Teste", Room.PRIVATE_ROOM);
+            //Timestamp timestamp, String msg, String email
+            Message message = new Message(System.currentTimeMillis(), "Message", "test@gmail.com");
+            room.addMsg(message);
+            chat = ChatFragment.newInstance(room);
 
-        //fragmentTransaction.add(R.id.chatFragment, rf);
-        fragmentTransaction.add(R.id.fragmentChatRoom, rf);
+            //fragmentTransaction.add(R.id.chatFragment, rf);
+            fragmentTransaction.add(R.id.fragmentChatRoom, chat);
 
-        fragmentTransaction.commit();
+            fragmentTransaction.commit();
+        }
     }
 
 

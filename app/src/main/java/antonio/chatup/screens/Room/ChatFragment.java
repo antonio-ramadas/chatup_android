@@ -27,6 +27,7 @@ public class ChatFragment extends Fragment {
     private static final String ROOM_DATA = "room-data";
     private Room mRoom;
     private OnListFragmentInteractionListener mListener;
+    private RecyclerView.Adapter adapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -67,7 +68,8 @@ public class ChatFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, 1));
             }*/
-            recyclerView.setAdapter(new MyChatRecyclerViewAdapter(mRoom, mListener));
+            adapter = new MyChatRecyclerViewAdapter(mRoom, mListener);
+            recyclerView.setAdapter(adapter);
         }
         return view;
     }
