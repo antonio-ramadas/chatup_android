@@ -3,6 +3,7 @@ package antonio.chatup.data;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.Semaphore;
 
 /**
  * Created by Antonio on 07-05-2016.
@@ -17,10 +18,30 @@ public class Room implements Serializable {
     private boolean privateRoom;
 
     private String name;
+    private int id;
 
-    public Room(String name, boolean type) {
+    Semaphore room_sem = new Semaphore(1, true);
+
+    public Room(int id, String name, boolean type) {
+        this.id = id;
         this.name = name;
         privateRoom = type;
+    }
+
+    public boolean compareID(int rhs) {
+        return getId() == rhs;
+    }
+
+    private void lock() {
+        try {
+            room_sem.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void release() {
+        room_sem.release();
     }
 
     public boolean isPrivate() {
@@ -52,5 +73,9 @@ public class Room implements Serializable {
 
     public ArrayList<Message> getMessages() {
         return messages;
+    }
+
+    public int getId() {
+        return id;
     }
 }

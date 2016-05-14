@@ -43,7 +43,7 @@ public class ChatRoom extends AppCompatActivity implements ChatFragment.OnListFr
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-            Room room = new Room("Teste", Room.PRIVATE_ROOM);
+            Room room = new Room(1, "Teste", Room.PRIVATE_ROOM);
             //Timestamp timestamp, String msg, String email
             Message message = new Message(System.currentTimeMillis(), "Message", "test@gmail.com");
             room.addMsg(message);
