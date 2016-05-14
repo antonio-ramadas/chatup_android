@@ -4,9 +4,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import antonio.chatup.R;
+import antonio.chatup.data.Global;
 import antonio.chatup.data.Message;
 import antonio.chatup.data.Room;
 import antonio.chatup.dummy.DummyContent.DummyItem;
@@ -42,7 +44,17 @@ public class MyChatRecyclerViewAdapter extends RecyclerView.Adapter<MyChatRecycl
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = messages.get(position);
-        holder.mUserView.setText(messages.get(position).getSender() + "@" + messages.get(position).getDate());
+
+        String senderInfo;
+
+        if (messages.get(position).getSender() != null) {
+            senderInfo = messages.get(position).getSender() + "@" + messages.get(position).getDate();
+        } else {
+            senderInfo = messages.get(position).getDate().toString();
+            holder.layout.setBackgroundResource(R.drawable.message_sent);
+        }
+
+        holder.mUserView.setText(senderInfo);
         holder.mTextView.setText(messages.get(position).getMsg());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -67,12 +79,14 @@ public class MyChatRecyclerViewAdapter extends RecyclerView.Adapter<MyChatRecycl
         public final TextView mUserView;
         public final TextView mTextView;
         public Message mItem;
+        LinearLayout layout;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
             mUserView = (TextView) view.findViewById(R.id.userInfo);
             mTextView = (TextView) view.findViewById(R.id.chatMessage);
+            layout = ((LinearLayout) view.findViewById(R.id.background_shape_layout));
         }
 
         @Override

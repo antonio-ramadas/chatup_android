@@ -1,18 +1,12 @@
 package antonio.chatup.screens.Room;
 
-import android.app.ActionBar;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
-import java.security.Timestamp;
-import java.util.Date;
 
 import antonio.chatup.R;
 import antonio.chatup.data.Message;
@@ -39,11 +33,19 @@ public class ChatRoom extends AppCompatActivity implements ChatFragment.OnListFr
             }
         });
 
+        ImageButton informationButton = (ImageButton) findViewById(R.id.room_information_button);
+        informationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         if (savedInstanceState == null) {
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-            Room room = new Room(1, "Teste", Room.PRIVATE_ROOM);
+            Room room = new Room(1, "ip:port","Teste", Room.PRIVATE_ROOM);
             //Timestamp timestamp, String msg, String email
             Message message = new Message(System.currentTimeMillis(), "Message", "test@gmail.com");
             room.addMsg(message);
@@ -61,5 +63,4 @@ public class ChatRoom extends AppCompatActivity implements ChatFragment.OnListFr
     public void onListFragmentInteraction(Message message) {
 
     }
-
 }

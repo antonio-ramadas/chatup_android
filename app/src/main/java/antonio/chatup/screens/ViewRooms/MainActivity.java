@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import antonio.chatup.R;
+import antonio.chatup.data.Global;
 import antonio.chatup.data.Message;
 import antonio.chatup.dummy.DummyContent;
 import antonio.chatup.screens.Login.LoginActivity;
@@ -63,6 +64,8 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.add(R.id.fragment, rf);
 
             fragmentTransaction.commit();
+
+            ((Global) this.getApplication()).set("email", "token", MainActivity.this);
         }
     }
 
@@ -101,7 +104,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        setTitle(item.getTitle());
+        //setTitle(item.getTitle());
 
         if (id == R.id.nav_logout) {
             //TODO disconnect
