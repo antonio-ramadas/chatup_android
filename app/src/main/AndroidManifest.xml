@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".data.Global"
@@ -14,6 +15,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
         <activity
             android:name=".screens.Login.LoginActivity"
             android:label="@string/app_name">
@@ -29,6 +31,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".screens.Room.ChatRoom"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:label="@string/app_name" />
     </application>
 
 </manifest>
