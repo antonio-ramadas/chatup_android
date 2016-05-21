@@ -8,13 +8,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import antonio.chatup.R;
-import antonio.chatup.data.Global;
 import antonio.chatup.data.Message;
 import antonio.chatup.data.Room;
 import antonio.chatup.dummy.DummyContent.DummyItem;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the

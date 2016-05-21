@@ -16,11 +16,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.facebook.login.LoginManager;
+
 import antonio.chatup.R;
-import antonio.chatup.data.Global;
-import antonio.chatup.data.Message;
+import antonio.chatup.data.ChatupGlobals;
 import antonio.chatup.dummy.DummyContent;
-import antonio.chatup.screens.Login.LoginActivity;
+import antonio.chatup.screens.Login.LoginInitialActivity;
 import antonio.chatup.screens.Room.ChatRoom;
 import antonio.chatup.screens.Room.RoomFragment;
 
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity
 
             fragmentTransaction.commit();
 
-            ((Global) this.getApplication()).set("email", "token", MainActivity.this);
+            ((ChatupGlobals) this.getApplication()).set("email", "token", MainActivity.this);
         }
     }
 
@@ -108,7 +109,8 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_logout) {
             //TODO disconnect
-            Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+            LoginManager.getInstance().logOut();
+            Intent i = new Intent(getApplicationContext(), LoginInitialActivity.class);
             startActivity(i);
             finish();
         } else if (id != R.id.nav_view_rooms) {

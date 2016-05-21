@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Created by Antonio on 14-05-2016.
  */
-public class Global extends Application {
+public class ChatupGlobals extends Application {
 
     String userEmail, userToken;
     Context context;
