@@ -2,6 +2,7 @@ package antonio.chatup.screens.Room;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import antonio.chatup.R;
 import antonio.chatup.data.Message;
 import antonio.chatup.data.Room;
+import antonio.chatup.screens.ViewRooms.MainActivity;
 
 public class ChatRoom extends AppCompatActivity implements ChatFragment.OnListFragmentInteractionListener {
 
@@ -37,7 +39,8 @@ public class ChatRoom extends AppCompatActivity implements ChatFragment.OnListFr
         informationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(getApplicationContext(), RoomInfoActivity.class);
+                startActivity(i);
             }
         });
 
