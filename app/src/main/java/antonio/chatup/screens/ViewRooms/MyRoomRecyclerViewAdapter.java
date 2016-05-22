@@ -1,6 +1,7 @@
-package antonio.chatup.screens.Room;
+package antonio.chatup.screens.ViewRooms;
 
 import android.app.FragmentManager;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +11,11 @@ import android.widget.TextView;
 
 //import antonio.chatup.ItemFragment.OnListFragmentInteractionListener;
 import antonio.chatup.R;
+import antonio.chatup.data.ChatupGlobals;
+import antonio.chatup.data.Room;
 import antonio.chatup.dummy.DummyContent.DummyItem;
-import antonio.chatup.screens.ViewRooms.DialogAccessRoomFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,12 +25,10 @@ import java.util.List;
  */
 public class MyRoomRecyclerViewAdapter extends RecyclerView.Adapter<MyRoomRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
     private final RoomFragment.OnListFragmentInteractionListener mListener;
     public FragmentManager fragmentManager;
 
-    public MyRoomRecyclerViewAdapter(List<DummyItem> items, RoomFragment.OnListFragmentInteractionListener listener, FragmentManager fragmentManager) {
-        mValues = items;
+    public MyRoomRecyclerViewAdapter(RoomFragment.OnListFragmentInteractionListener listener, FragmentManager fragmentManager) {
         mListener = listener;
         this.fragmentManager = fragmentManager;
     }
@@ -40,11 +41,17 @@ public class MyRoomRecyclerViewAdapter extends RecyclerView.Adapter<MyRoomRecycl
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mRoomTypeView.setImageResource(android.R.drawable.ic_secure);
-        holder.mUsersView.setText(mValues.get(position).id);
-        holder.mRoomNameView.setText(mValues.get(position).content);
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        Room room = ChatupGlobals.ROOMS.get(position);
+        holder.mRoom = room;
+
+        if (room.isPrivate())
+            holder.mRoomTypeView.setImageResource(android.R.drawable.ic_secure);
+        else
+            holder.mRoomTypeView.setImageResource(android.R.drawable.ic_partial_secure);
+
+        holder.mUsersView.setText(room.getNumUsers() + "");
+        holder.mRoomNameView.setText(room.getName());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,17 +59,23 @@ public class MyRoomRecyclerViewAdapter extends RecyclerView.Adapter<MyRoomRecycl
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.onListFragmentInteraction(holder.mRoom);
                 }
 
-                new DialogAccessRoomFragment().show(fragmentManager, "createRoomDialogTag");
+                DialogAccessRoomFragment dialog = new DialogAccessRoomFragment();
+
+                Bundle args = new Bundle();
+                args.putSerializable("room", ChatupGlobals.ROOMS.get(position));
+                dialog.setArguments(args);
+
+                dialog.show(fragmentManager, "accessRoomDialogTag");
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return ChatupGlobals.ROOMS.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -70,7 +83,7 @@ public class MyRoomRecyclerViewAdapter extends RecyclerView.Adapter<MyRoomRecycl
         public final ImageView mRoomTypeView;
         public final TextView mUsersView;
         public final TextView mRoomNameView;
-        public DummyItem mItem;
+        public Room mRoom;
 
         public ViewHolder(View view) {
             super(view);

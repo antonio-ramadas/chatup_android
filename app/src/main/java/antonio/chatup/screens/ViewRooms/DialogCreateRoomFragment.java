@@ -6,11 +6,13 @@ import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import antonio.chatup.R;
 
@@ -56,7 +58,9 @@ public class DialogCreateRoomFragment extends android.app.DialogFragment {
                 .setPositiveButton("Create", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        //TODO Create room
+                        //TODO Create room on the server
+                        //TODO add room to the drawers
+                        //TODO add room to the listener
                     }
                 })
                 .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {

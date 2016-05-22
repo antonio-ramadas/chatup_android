@@ -50,7 +50,7 @@ public class LoginInitialActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 // App code
-                //TODO send token to the server and store the one received
+                //TODO send token to the server and store the one received (send the token to the other activity via bundle)
                 Log.e("sucesso", loginResult.getAccessToken().toString());
                 Log.e("sucesso", loginResult.getAccessToken().getToken());
 

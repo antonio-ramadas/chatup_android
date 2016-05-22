@@ -11,6 +11,7 @@
 
     <item android:title="Rooms">
         <menu>
+            <group android:id="@+id/drawer_rooms" android:checkableBehavior="single">
             <item
                 android:id="@+id/nav_public_room"
                 android:icon="@android:drawable/ic_partial_secure"
@@ -19,6 +20,7 @@
                 android:id="@+id/nav_private_room"
                 android:icon="@android:drawable/ic_secure"
                 android:title="Private Room Example" />
+            </group>
         </menu>
     </item>
 

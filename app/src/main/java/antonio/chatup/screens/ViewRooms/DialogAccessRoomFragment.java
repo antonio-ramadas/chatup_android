@@ -6,13 +6,17 @@ import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import antonio.chatup.R;
+import antonio.chatup.data.Room;
 
 
 /**
@@ -55,6 +59,10 @@ public class DialogAccessRoomFragment extends android.app.DialogFragment {
         // Get the layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
+        Bundle args = getArguments();
+        //this dialog is of this room
+        Room room = (Room) args.getSerializable("room");
+
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(inflater.inflate(R.layout.fragment_dialog_access_room, null))
@@ -62,7 +70,14 @@ public class DialogAccessRoomFragment extends android.app.DialogFragment {
                 .setPositiveButton("Enter", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        //TODO Join room
+                        //TODO Join room on the server (check for errors)
+                        TextView pass = (TextView) getActivity().findViewById(R.id.room_password);
+
+                        //TODO get room from the bundle
+                        //TODO send room to the server (if it isn't a match return)
+
+                        //TODO add to the drawer
+                        //TODO add room to be updated (globals)
                     }
                 })
                 .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {

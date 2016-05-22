@@ -18,15 +18,17 @@ public class Room implements Serializable {
     private boolean privateRoom;
 
     private String name;
+    private int numUsers;
     private String server; //ip:port
     private int id;
 
     Semaphore room_sem = new Semaphore(1, true);
 
-    public Room(int id, String server, String name, boolean type) {
+    public Room(int id, String server, String name, boolean type, int numUsers) {
         this.id = id;
         this.name = name;
         this.server = server;
+        this.numUsers = numUsers;
         privateRoom = type;
     }
 
@@ -79,5 +81,9 @@ public class Room implements Serializable {
 
     public int getId() {
         return id;
+    }
+
+    public int getNumUsers() {
+        return numUsers;
     }
 }

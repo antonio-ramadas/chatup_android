@@ -1,4 +1,4 @@
-package antonio.chatup.screens.Room;
+package antonio.chatup.screens.ViewRooms;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,9 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import antonio.chatup.R;
+import antonio.chatup.data.Room;
 import antonio.chatup.dummy.DummyContent;
-import antonio.chatup.dummy.DummyContent.DummyItem;
 
 /**
  * A fragment representing a list of Items.
@@ -68,7 +70,7 @@ public class RoomFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyRoomRecyclerViewAdapter(DummyContent.ITEMS, mListener, getFragmentManager()));
+            recyclerView.setAdapter(new MyRoomRecyclerViewAdapter(mListener, getFragmentManager()));
         }
         return view;
     }
@@ -103,6 +105,6 @@ public class RoomFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Room item);
     }
 }

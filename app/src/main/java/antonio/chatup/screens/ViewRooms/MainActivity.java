@@ -18,12 +18,13 @@ import android.view.MenuItem;
 
 import com.facebook.login.LoginManager;
 
+import java.util.List;
+
 import antonio.chatup.R;
 import antonio.chatup.data.ChatupGlobals;
-import antonio.chatup.dummy.DummyContent;
+import antonio.chatup.data.Room;
 import antonio.chatup.screens.Login.LoginInitialActivity;
 import antonio.chatup.screens.Room.ChatRoom;
-import antonio.chatup.screens.Room.RoomFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, RoomFragment.OnListFragmentInteractionListener,
@@ -41,9 +42,14 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
                 new DialogCreateRoomFragment().show(getFragmentManager(), "createRoomDialogTag");
             }
         });
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -51,12 +57,12 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
         //navigationView.getMenu().add(R.id.main_group, 5, 5,"teste");
 
         if (savedInstanceState == null) {
+            //TODO replace this call (must set valid data)
+            ((ChatupGlobals) this.getApplication()).set("email", "token", MainActivity.this);
+
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
@@ -66,7 +72,6 @@ public class MainActivity extends AppCompatActivity
 
             fragmentTransaction.commit();
 
-            ((ChatupGlobals) this.getApplication()).set("email", "token", MainActivity.this);
         }
     }
 
@@ -108,7 +113,7 @@ public class MainActivity extends AppCompatActivity
         //setTitle(item.getTitle());
 
         if (id == R.id.nav_logout) {
-            //TODO disconnect
+            //TODO disconnect (send disconnect to the server aside logging out of facebook)
             LoginManager.getInstance().logOut();
             Intent i = new Intent(getApplicationContext(), LoginInitialActivity.class);
             startActivity(i);
@@ -126,7 +131,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+    public void onListFragmentInteraction(Room item) {
 
     }
     @Override

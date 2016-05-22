@@ -9,6 +9,6 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".screens.Room.RoomFragment"
+    tools:context=".screens.ViewRooms.RoomFragment"
     tools:listitem="@layout/fragment_room"
     android:clickable="false" />
