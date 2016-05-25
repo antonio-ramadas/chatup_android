@@ -22,8 +22,6 @@ public class Room implements Serializable {
     private String server; //ip:port
     private int id;
 
-    Semaphore room_sem = new Semaphore(1, true);
-
     public Room(int id, String server, String name, boolean type, int numUsers) {
         this.id = id;
         this.name = name;
@@ -34,18 +32,6 @@ public class Room implements Serializable {
 
     public boolean compareID(int rhs) {
         return getId() == rhs;
-    }
-
-    public void lock() {
-        try {
-            room_sem.acquire();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void release() {
-        room_sem.release();
     }
 
     public boolean isPrivate() {

@@ -103,7 +103,7 @@ public class LoginInitialActivity extends AppCompatActivity {
     }
 
     private void accessServer(final String email, final LoginResult loginResult) {
-        new Thread(new Runnable() {
+        Thread thr = new Thread(new Runnable() {
             public void run() {
                 final ChatupGlobals chatup = ((ChatupGlobals) getApplication());
 
@@ -125,6 +125,13 @@ public class LoginInitialActivity extends AppCompatActivity {
                     Log.e("LoginInitialActivity", "Invalid arguments", e);
                 }
             }
-        }).start();
+        });
+
+        //thr.start();
+
+        //TODO Delete these 3 lines
+        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(i);
+        finish();
     }
 }

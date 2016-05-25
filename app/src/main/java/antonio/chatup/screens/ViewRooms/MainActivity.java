@@ -64,9 +64,10 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        //navigationView.getMenu().add(R.id.main_group, 5, 5,"teste");
-
         if (savedInstanceState == null) {
+            //navigationView.getMenu().add(R.id.main_group, 5, 5,"teste");
+            navigationView.getMenu().findItem(R.id.room_item_id).getSubMenu().add("teste");
+
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 

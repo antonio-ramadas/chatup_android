@@ -9,18 +9,18 @@
             />
     </group>
 
-    <item android:title="Rooms">
+    <item android:title="Rooms" android:id="@+id/room_item_id">
         <menu>
-            <group android:id="@+id/drawer_rooms" android:checkableBehavior="single">
             <item
+                android:orderInCategory="0"
                 android:id="@+id/nav_public_room"
                 android:icon="@android:drawable/ic_partial_secure"
                 android:title="Public Room Example" />
             <item
+                android:orderInCategory="0"
                 android:id="@+id/nav_private_room"
                 android:icon="@android:drawable/ic_secure"
                 android:title="Private Room Example" />
-            </group>
         </menu>
     </item>
 
