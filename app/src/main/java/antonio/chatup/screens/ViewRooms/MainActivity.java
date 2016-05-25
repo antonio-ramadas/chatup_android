@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,10 +19,16 @@ import android.view.MenuItem;
 
 import com.facebook.login.LoginManager;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 import antonio.chatup.R;
 import antonio.chatup.data.ChatupGlobals;
+import antonio.chatup.data.HTTP_Directories;
+import antonio.chatup.data.HTTP_Methods;
+import antonio.chatup.data.Requests;
 import antonio.chatup.data.Room;
 import antonio.chatup.screens.Login.LoginInitialActivity;
 import antonio.chatup.screens.Room.ChatRoom;
@@ -60,9 +67,6 @@ public class MainActivity extends AppCompatActivity
         //navigationView.getMenu().add(R.id.main_group, 5, 5,"teste");
 
         if (savedInstanceState == null) {
-            //TODO replace this call (must set valid data)
-            ((ChatupGlobals) this.getApplication()).set("email", "token");
-
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
@@ -71,7 +75,6 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.add(R.id.fragment, rf);
 
             fragmentTransaction.commit();
-
         }
     }
 
@@ -113,11 +116,9 @@ public class MainActivity extends AppCompatActivity
         //setTitle(item.getTitle());
 
         if (id == R.id.nav_logout) {
-            //TODO disconnect (send disconnect to the server aside logging out of facebook)
             LoginManager.getInstance().logOut();
-            Intent i = new Intent(getApplicationContext(), LoginInitialActivity.class);
-            startActivity(i);
-            finish();
+            chatupLogOut();
+
         } else if (id != R.id.nav_view_rooms) {
             Intent i = new Intent(getApplicationContext(), ChatRoom.class);
             //pass as argument the room title
@@ -128,6 +129,26 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void chatupLogOut() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ChatupGlobals chatup = ((ChatupGlobals) getApplication());
+                try {
+                    JSONObject obj;
+                    obj = chatup.createJSON(Requests.USER_DISCONNECT, "email", chatup.getUserEmail(), "token", chatup.getUserToken());
+                    JSONObject response = chatup.get(HTTP_Directories.USER_SERVICE, HTTP_Methods.DELETE, obj);
+
+                    Intent i = new Intent(getApplicationContext(), LoginInitialActivity.class);
+                    startActivity(i);
+                    finish();
+                } catch (JSONException e) {
+                    Log.e("Main Activity", "JSON exception", e);
+                }
+            }
+        }).start();
     }
 
     @Override

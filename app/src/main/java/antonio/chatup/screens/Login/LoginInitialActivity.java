@@ -9,6 +9,8 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
@@ -67,32 +69,23 @@ public class LoginInitialActivity extends AppCompatActivity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(final LoginResult loginResult) {
-                //TODO send token to the server and store the one received (send the token to the other activity via bundle)
-
-                new Thread(new Runnable() {
-                    public void run() {
-                        final ChatupGlobals chatup = ((ChatupGlobals) getApplication());
-
-                        final JSONObject obj;
-                        try {
-                            String token = loginResult.getAccessToken().getToken().toString();
-
-                            obj = chatup.createJSON(Requests.USER_LOGIN, "token", token);
-                            JSONObject response = chatup.get(HTTP_Directories.USER_SERVICE, HTTP_Methods.POST, obj);
-
-                            if (response.has("success")) {
-                                //TODO get email
-                                chatup.set("", response.getJSONObject("success").getString("token"));
-
-                            Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(i);
-                            finish();
+                GraphRequest graphRequest = GraphRequest.newMeRequest(loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                try {
+                                    String email = object.getString("email");
+                                    accessServer(email, loginResult);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                        } catch (JSONException e) {
-                            Log.e("LoginInitialActivity", "Invalid arguments", e);
-                        }
-                    }
-                }).start();
+                        });
+
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,email");
+                graphRequest.setParameters(parameters);
+                graphRequest.executeAsync();
             }
 
             @Override
@@ -107,5 +100,31 @@ public class LoginInitialActivity extends AppCompatActivity {
                 Log.e("erro", exception.getMessage());
             }
         });
+    }
+
+    private void accessServer(final String email, final LoginResult loginResult) {
+        new Thread(new Runnable() {
+            public void run() {
+                final ChatupGlobals chatup = ((ChatupGlobals) getApplication());
+
+                final JSONObject obj;
+                try {
+                    String token = loginResult.getAccessToken().getToken().toString();
+
+                    obj = chatup.createJSON(Requests.USER_LOGIN, "token", token);
+                    JSONObject response = chatup.get(HTTP_Directories.USER_SERVICE, HTTP_Methods.POST, obj);
+
+                    if (response != null && response.has("success")) {
+                        chatup.set(email, response.getJSONObject("success").getString("token"));
+
+                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(i);
+                        finish();
+                    }
+                } catch (JSONException e) {
+                    Log.e("LoginInitialActivity", "Invalid arguments", e);
+                }
+            }
+        }).start();
     }
 }

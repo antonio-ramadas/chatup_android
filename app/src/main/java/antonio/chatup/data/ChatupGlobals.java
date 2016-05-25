@@ -32,7 +32,8 @@ public class ChatupGlobals extends Application {
     private final static String PORT = "8080";
     private final static String INIT_URL = HTTP_S + IP + ":" + PORT + "/";
 
-    String userEmail, userToken;
+    private String userEmail;
+    private String userToken;
     public static List<Room> ROOMS = new ArrayList<Room>();
 
     public void set(String email, String token) {
@@ -172,5 +173,13 @@ public class ChatupGlobals extends Application {
         }
         br.close();
         return sb.toString();
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public String getUserToken() {
+        return userToken;
     }
 }
