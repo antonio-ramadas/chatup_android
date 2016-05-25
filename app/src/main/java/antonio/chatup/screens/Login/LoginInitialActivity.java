@@ -14,6 +14,9 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,7 +30,9 @@ import java.util.Map;
 
 import antonio.chatup.R;
 import antonio.chatup.data.ChatupGlobals;
+import antonio.chatup.data.HTTP_Directories;
 import antonio.chatup.data.HTTP_Methods;
+import antonio.chatup.data.Requests;
 import antonio.chatup.screens.ViewRooms.MainActivity;
 
 public class LoginInitialActivity extends AppCompatActivity {
@@ -61,23 +66,33 @@ public class LoginInitialActivity extends AppCompatActivity {
         // Callback registration
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
-            public void onSuccess(LoginResult loginResult) {
-                // App code
+            public void onSuccess(final LoginResult loginResult) {
                 //TODO send token to the server and store the one received (send the token to the other activity via bundle)
-                Log.e("sucesso", loginResult.getAccessToken().toString());
-                Log.e("sucesso", loginResult.getAccessToken().getToken());
 
                 new Thread(new Runnable() {
                     public void run() {
-                        ((ChatupGlobals) getApplication()).get("RoomService", HTTP_Methods.GET, null);
-                        ((ChatupGlobals) getApplication()).get("UserService", HTTP_Methods.POST, null);
+                        final ChatupGlobals chatup = ((ChatupGlobals) getApplication());
+
+                        final JSONObject obj;
+                        try {
+                            String token = loginResult.getAccessToken().getToken().toString();
+
+                            obj = chatup.createJSON(Requests.USER_LOGIN, "token", token);
+                            JSONObject response = chatup.get(HTTP_Directories.USER_SERVICE, HTTP_Methods.POST, obj);
+
+                            if (response.has("success")) {
+                                //TODO get email
+                                chatup.set("", response.getJSONObject("success").getString("token"));
+
+                            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(i);
+                            finish();
+                            }
+                        } catch (JSONException e) {
+                            Log.e("LoginInitialActivity", "Invalid arguments", e);
+                        }
                     }
                 }).start();
-
-
-                /*Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(i);
-                finish();*/
             }
 
             @Override

@@ -45,7 +45,7 @@ public class ChatupGlobals extends Application {
         ROOMS.add(room);
     }
 
-    public JSONObject createJSON(String mainName, String... args) throws JSONException, IllegalArgumentException {
+    public JSONObject createJSON(Requests request, String... args) throws JSONException, IllegalArgumentException {
         if (args.length % 2 != 0) {
             throw new IllegalArgumentException();
         }
@@ -57,7 +57,7 @@ public class ChatupGlobals extends Application {
             valuesJSON.put(args[i], args[i+1]);
         }
 
-        json.put(mainName, valuesJSON);
+        json.put(request.toString(), valuesJSON);
 
         return json;
     }
@@ -88,9 +88,9 @@ public class ChatupGlobals extends Application {
         return dir;
     }
 
-    public JSONObject get(String url_str, HTTP_Methods method, JSONObject arg) {
+    public JSONObject get(HTTP_Directories dir, HTTP_Methods method, JSONObject arg) {
         //open connection
-        HttpURLConnection urlConnection = open(url_str);
+        HttpURLConnection urlConnection = open(dir.toString());
         if (urlConnection == null) {
             return null;
         }
