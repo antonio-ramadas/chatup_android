@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screens.Room.ChatRoom">
+    tools:context=".screens.Room.ChatRoom"
+    android:background="@android:color/holo_blue_light">
 
     <LinearLayout
         android:orientation="vertical"
@@ -26,9 +27,16 @@
                 android:text="Large Text"
                 android:id="@+id/roomTitle"
                 android:textStyle="bold"
-                android:textColor="@android:color/holo_blue_dark"
+                android:textColor="@android:color/white"
                 android:paddingLeft="10dp"
                 android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/leave_room_button"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:layout_marginRight="5dp" />
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -58,7 +66,10 @@
                 android:layout_weight="1"
                 android:maxLines="2"
                 android:minLines="1"
-                android:hint="Enter your message"/>
+                android:hint="Enter your message"
+                android:textColor="@android:color/white"
+                android:textColorHighlight="@android:color/white"
+                android:textColorHint="@android:color/white" />
 
             <ImageButton
                 android:layout_width="wrap_content"
