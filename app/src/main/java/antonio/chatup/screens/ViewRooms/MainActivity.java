@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity
 
         if (savedInstanceState == null) {
             //TODO replace this call (must set valid data)
-            ((ChatupGlobals) this.getApplication()).set("email", "token", MainActivity.this);
+            ((ChatupGlobals) this.getApplication()).set("email", "token");
 
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

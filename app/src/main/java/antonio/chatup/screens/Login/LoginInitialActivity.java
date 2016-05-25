@@ -14,7 +14,20 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
+import java.util.Map;
+
 import antonio.chatup.R;
+import antonio.chatup.data.ChatupGlobals;
+import antonio.chatup.data.HTTP_Methods;
 import antonio.chatup.screens.ViewRooms.MainActivity;
 
 public class LoginInitialActivity extends AppCompatActivity {
@@ -54,9 +67,17 @@ public class LoginInitialActivity extends AppCompatActivity {
                 Log.e("sucesso", loginResult.getAccessToken().toString());
                 Log.e("sucesso", loginResult.getAccessToken().getToken());
 
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                new Thread(new Runnable() {
+                    public void run() {
+                        ((ChatupGlobals) getApplication()).get("RoomService", HTTP_Methods.GET, null);
+                        ((ChatupGlobals) getApplication()).get("UserService", HTTP_Methods.POST, null);
+                    }
+                }).start();
+
+
+                /*Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(i);
-                finish();
+                finish();*/
             }
 
             @Override
