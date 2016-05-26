@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 import antonio.chatup.R;
-import antonio.chatup.data.ChatupGlobals;
+import antonio.chatup.data.ChatupSingleton;
 import antonio.chatup.data.HTTP_Directories;
 import antonio.chatup.data.HTTP_Methods;
 import antonio.chatup.data.Requests;
@@ -105,7 +105,7 @@ public class LoginInitialActivity extends AppCompatActivity {
     private void accessServer(final String email, final LoginResult loginResult) {
         Thread thr = new Thread(new Runnable() {
             public void run() {
-                final ChatupGlobals chatup = ((ChatupGlobals) getApplication());
+                final ChatupSingleton chatup = ChatupSingleton.getInstance();
 
                 final JSONObject obj;
                 try {
@@ -128,6 +128,8 @@ public class LoginInitialActivity extends AppCompatActivity {
         });
 
         //thr.start();
+
+        ChatupSingleton.getInstance().set("email", "token");
 
         //TODO Delete these 3 lines
         Intent i = new Intent(getApplicationContext(), MainActivity.class);

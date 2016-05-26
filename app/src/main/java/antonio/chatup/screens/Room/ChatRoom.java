@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import antonio.chatup.R;
+import antonio.chatup.data.ChatupSingleton;
 import antonio.chatup.data.Message;
 import antonio.chatup.data.Room;
 import antonio.chatup.screens.ViewRooms.MainActivity;
@@ -25,7 +26,9 @@ public class ChatRoom extends AppCompatActivity implements ChatFragment.OnListFr
 
         Bundle extras = getIntent().getExtras();
         TextView title = (TextView) findViewById(R.id.roomTitle);
-        title.setText(extras.getString(String.valueOf(R.string.room_title_param)));
+        int index = extras.getInt(String.valueOf(R.string.room_index_param));
+        Room room = ChatupSingleton.getInstance().getRoom(index);
+        title.setText(room.getName());
 
         ImageButton sendButton = (ImageButton) findViewById(R.id.sendButton);
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -48,11 +51,11 @@ public class ChatRoom extends AppCompatActivity implements ChatFragment.OnListFr
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-            Room room = new Room(1, "ip:port","Teste", Room.PRIVATE_ROOM, 0);
+            Room roomTemp = new Room(1, "ip:port","Teste", Room.PRIVATE_ROOM, 0);
             //Timestamp timestamp, String msg, String email
             Message message = new Message(System.currentTimeMillis(), "Message", "test@gmail.com");
-            room.addMsg(message);
-            chat = ChatFragment.newInstance(room);
+            roomTemp.addMsg(message);
+            chat = ChatFragment.newInstance(roomTemp);
 
             //fragmentTransaction.add(R.id.chatFragment, rf);
             fragmentTransaction.add(R.id.fragmentChatRoom, chat);

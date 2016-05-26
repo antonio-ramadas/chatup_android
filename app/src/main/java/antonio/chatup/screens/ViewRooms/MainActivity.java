@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
+import android.view.SubMenu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,10 +23,8 @@ import com.facebook.login.LoginManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.List;
-
 import antonio.chatup.R;
-import antonio.chatup.data.ChatupGlobals;
+import antonio.chatup.data.ChatupSingleton;
 import antonio.chatup.data.HTTP_Directories;
 import antonio.chatup.data.HTTP_Methods;
 import antonio.chatup.data.Requests;
@@ -57,6 +56,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        createDrawers(navigationView);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         if (savedInstanceState == null) {
-            //navigationView.getMenu().add(R.id.main_group, 5, 5,"teste");
             navigationView.getMenu().findItem(R.id.room_item_id).getSubMenu().add("teste");
 
             FragmentManager fragmentManager = getFragmentManager();
@@ -76,6 +75,18 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.add(R.id.fragment, rf);
 
             fragmentTransaction.commit();
+        }
+    }
+
+    private void createDrawers(NavigationView navigationView) {
+        SubMenu subMenu = navigationView.getMenu().findItem(R.id.room_item_id).getSubMenu();
+        for (Room room : ChatupSingleton.getInstance().getRooms()) {
+            MenuItem mItem = subMenu.add(Menu.NONE, room.getId(), room.getId(), room.getName());
+            if (room.isPrivate()) {
+                mItem.setIcon(android.R.drawable.ic_secure);
+            } else {
+                mItem.setIcon(android.R.drawable.ic_partial_secure);
+            }
         }
     }
 
@@ -123,7 +134,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id != R.id.nav_view_rooms) {
             Intent i = new Intent(getApplicationContext(), ChatRoom.class);
             //pass as argument the room title
-            i.putExtra(String.valueOf(R.string.room_title_param), item.getTitle());
+            i.putExtra(String.valueOf(R.string.room_index_param), ChatupSingleton.getInstance().getRoomIndex(item.getItemId()));
             startActivity(i);
         }
 
@@ -136,7 +147,7 @@ public class MainActivity extends AppCompatActivity
         new Thread(new Runnable() {
             @Override
             public void run() {
-                ChatupGlobals chatup = ((ChatupGlobals) getApplication());
+                ChatupSingleton chatup = ChatupSingleton.getInstance();
                 try {
                     JSONObject obj;
                     obj = chatup.createJSON(Requests.USER_DISCONNECT, "email", chatup.getUserEmail(), "token", chatup.getUserToken());

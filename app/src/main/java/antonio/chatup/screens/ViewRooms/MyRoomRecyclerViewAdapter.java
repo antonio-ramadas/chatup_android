@@ -11,12 +11,9 @@ import android.widget.TextView;
 
 //import antonio.chatup.ItemFragment.OnListFragmentInteractionListener;
 import antonio.chatup.R;
-import antonio.chatup.data.ChatupGlobals;
+import antonio.chatup.data.ChatupSingleton;
 import antonio.chatup.data.Room;
 import antonio.chatup.dummy.DummyContent.DummyItem;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
@@ -42,7 +39,7 @@ public class MyRoomRecyclerViewAdapter extends RecyclerView.Adapter<MyRoomRecycl
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        Room room = ChatupGlobals.ROOMS.get(position);
+        Room room = ChatupSingleton.getInstance().getRoom(position);
         holder.mRoom = room;
 
         if (room.isPrivate())
@@ -62,10 +59,16 @@ public class MyRoomRecyclerViewAdapter extends RecyclerView.Adapter<MyRoomRecycl
                     mListener.onListFragmentInteraction(holder.mRoom);
                 }
 
+                if (!ChatupSingleton.getInstance().getRoom(position).isPrivate()) {
+                    //no need to open dialog if public
+                    //TODO add to rooms
+                    //TODO open room activity
+                }
+
                 DialogAccessRoomFragment dialog = new DialogAccessRoomFragment();
 
                 Bundle args = new Bundle();
-                args.putSerializable("room", ChatupGlobals.ROOMS.get(position));
+                args.putSerializable("room", ChatupSingleton.getInstance().getRoom(position));
                 dialog.setArguments(args);
 
                 dialog.show(fragmentManager, "accessRoomDialogTag");
@@ -75,7 +78,7 @@ public class MyRoomRecyclerViewAdapter extends RecyclerView.Adapter<MyRoomRecycl
 
     @Override
     public int getItemCount() {
-        return ChatupGlobals.ROOMS.size();
+        return ChatupSingleton.getInstance().sizeRooms();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

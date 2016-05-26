@@ -72,12 +72,10 @@ public class DialogAccessRoomFragment extends android.app.DialogFragment {
 
                         Bundle args = getArguments();
                         //this dialog is of this room
-                        Room room = (Room) args.getSerializable("room");
 
                         //TODO send room to the server (if it isn't a match return)
 
-                        //TODO add to the drawer
-                        //TODO add room to be updated (globals)
+                        //TODO add to the room list
                     }
                 })
                 .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {

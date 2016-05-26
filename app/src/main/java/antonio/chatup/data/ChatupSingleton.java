@@ -1,49 +1,60 @@
 package antonio.chatup.data;
 
-import android.app.Application;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Antonio on 14-05-2016.
+ * Created by Antonio on 26-05-2016.
  */
-public class ChatupGlobals extends Application {
+public class ChatupSingleton {
+    private static ChatupSingleton ourInstance = new ChatupSingleton();
+
+    public static ChatupSingleton getInstance() {
+        return ourInstance;
+    }
 
     private final static String HTTP_S = "http://";
-    private final static String IP = "172.30.4.251";
+    private final static String IP = "172.30.4.230";
     private final static String PORT = "8080";
     private final static String INIT_URL = HTTP_S + IP + ":" + PORT + "/";
 
     private String userEmail;
     private String userToken;
-    public static List<Room> ROOMS = new ArrayList<Room>();
+    private List<Room> rooms = new ArrayList<Room>();
+
+    private ChatupSingleton() {
+    }
+
+    public int getRoomIndex(int id) {
+        for (int i = 0; i < rooms.size(); i++) {
+            if (rooms.get(i).compareID(id))
+                return i;
+        }
+
+        return -1;
+    }
 
     public void set(String email, String token) {
         userEmail = email;
         userToken = token;
-        ROOMS.add(new Room(0, "", "teste", Room.PRIVATE_ROOM, 5));
+        getRooms().add(new Room(0, "", "teste", Room.PUBLIC_ROOM, 5));
     }
 
     public void add(Room room) {
-        ROOMS.add(room);
+        getRooms().add(room);
     }
 
     public JSONObject createJSON(Requests request, String... args) throws JSONException, IllegalArgumentException {
@@ -175,11 +186,23 @@ public class ChatupGlobals extends Application {
         return sb.toString();
     }
 
+    public Room getRoom(int index) {
+        return getRooms().get(index);
+    }
+
+    public int sizeRooms() {
+        return getRooms().size();
+    }
+
     public String getUserEmail() {
         return userEmail;
     }
 
     public String getUserToken() {
         return userToken;
+    }
+
+    public List<Room> getRooms() {
+        return rooms;
     }
 }
